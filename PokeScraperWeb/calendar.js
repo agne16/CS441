@@ -1,6 +1,17 @@
-//Simple script that converts date and time to pokemon sprites
+/**
+Simple script that converts date and time to pokemon sprites
+Requires the functions from functions.js
 
+Dependencies:
+	functions.js
+*/
+
+//get current time then print it
 printTime(getTime());
+
+////////////////////////////////////////////////////////////////////
+//////////////////////////FUNCTIONS/////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
 //Retrieves current system date and time
 //Returns an array of the values 
@@ -39,13 +50,13 @@ function printTime(calendar)
 	
 	//generate a string of xml code
 	var out = "";
-	out += 	"<img src='" + getImage(calendar[2]) + "'> :"
-		+ 	"<img src='" + getImage(calendar[1]) + "'> :"
-		+ 	"<img src='" + getImage(calendar[0]) + "'><br>"		
-		+ 	"<img src='" + getImage(calendar[4]) + "'>/"
-		+ 	"<img src='" + getImage(calendar[3]) + "'>/"
-		+ 	"<img src='" + getImage(yearFirst) + "'>"
-		+ 	"<img src='" + getImage(yearSecond) + "'>" 
+	out += 	"<img src='" + getImage(getEntry(calendar[2])) + "'> :"
+		+ 	"<img src='" + getImage(getEntry(calendar[1])) + "'> :"
+		+ 	"<img src='" + getImage(getEntry(calendar[0])) + "'><br>"		
+		+ 	"<img src='" + getImage(getEntry(calendar[4])) + "'>/"
+		+ 	"<img src='" + getImage(getEntry(calendar[3])) + "'>/"
+		+ 	"<img src='" + getImage(getEntry(yearFirst)) + "'>"
+		+ 	"<img src='" + getImage(getEntry(yearSecond)) + "'>" 
 		+ 	"<br>";
 		
 	out += 	"The time is: " + calendar[2] + ":"
@@ -58,25 +69,6 @@ function printTime(calendar)
 	//output generated string to div on html
 	document.getElementById("id01").innerHTML += out;
 	document.getElementById("id01").style.fontSize = "xx-large";
-}
-
-//Gets url to an image given a pokedex entry number
-function getImage(number)
-{
-	//request the pokedex data for a particular pokedex entry number
-	var xhr = new XMLHttpRequest();
-	xhr.open("GET", "http://pokeapi.co/api/v1/pokemon/" + number + "/", false);
-	xhr.send();	
-	
-	//extract the url for the array of urls for a pokemon's sprites
-	//select first entry in array and request for the sprite data
-	var imguri = "http://pokeapi.co" + JSON.parse(xhr.response).sprites[0].resource_uri;
-	xhr.open("GET", imguri, false);	
-	xhr.send();
-	
-	//extract the url of the sprite image file
-	img = "http://pokeapi.co" + JSON.parse(xhr.response).image
-	return img;
 }
 
 //Pads a number with leading zero if less than 10

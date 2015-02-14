@@ -1,0 +1,34 @@
+<html>
+	<style>
+		img { vertical-align: middle;}
+	</style>
+	
+	<head>	
+		<script type="text/javascript" src="functions.js"></script>
+		<script type="text/javascript" src="bmi.js"></script>		
+	</head>
+	
+	<body bgcolor="#5C85FF">
+	<h1>Pokemon BMI</h1>
+	<button onclick="location.reload()">Refresh</button>
+	<div id="id01"></div>	
+	</body>
+	
+	<script type="text/javascript">
+		function promptRange() 
+		{
+			var start = prompt("Please enter START range of Pokedex ID\n (Integer between 1 and 719)", "1");
+			var end = prompt("Please enter END range of Pokedex ID (Integer between START and 719)", "9");
+			var gen = prompt("What generation pokemon descriptions do you want to see?\n(Integer between 1 and 6)","6")
+			
+			buildTable(start, end, gen);
+		}
+		function refresh()
+		{
+			location.reload();
+		}
+		window.onload = promptRange();
+	</script>
+
+
+</html>
