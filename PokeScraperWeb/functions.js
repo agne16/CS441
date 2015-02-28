@@ -78,8 +78,50 @@ function getDesc(dexJSON, gen)
 	return JSON.parse(xhr.response).description
 }
 
+function calcRatio(hp,at,sat,spd)
+{
+	return Math.round((hp+at+sat)/spd)/10;
+}
+
+//Return a calculated BMI given height and weight (meters, kilograms)
+function calcBMI(height, weight)
+{
+	return Math.round((weight)/(height * height) * 10) / 10;
+}
+
 //Given a string, return the string	with first letter capitalized
 function capitalizeFirstLetter(string) 
 {
     return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function getType1(dexJSON)
+{
+	//the array of types. may come in handy later, when we want to filter by type.
+	var typeArray = dexJSON.types;
+	
+	//Many Poker Manz are dual-typed. First, let's handle the first type.
+	var type1 = JSON.stringify(typeArray[0]); //type1 = what will eventually hold the type.
+	type1 = type1.substring(9, type1.length-1);
+	var lastChar = type1.indexOf('"');
+	type1 = type1.substring(0,lastChar);
+		
+	return capitalizeFirstLetter(type1);
+		
+}
+
+function getType2(dexJSON)
+{
+	var typeArray = dexJSON.types;
+	
+	var type2 = JSON.stringify(typeArray[1]);
+	
+	if (type2!=undefined) 
+	{
+		type2 = type2.substring(9, type2.length-1);
+		lastChar=type2.indexOf('"');
+		type2=type2.substring(0,lastChar);		
+		return capitalizeFirstLetter(type2);
+	}
+	return "";
 }
