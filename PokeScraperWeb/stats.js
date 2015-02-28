@@ -17,7 +17,7 @@ Dependencies:
 function buildTable(start, end)
 {
 	//initialize first row of table
-	var out = "<table style='width:100%'>";
+	var out = "<table style='table'>";
 	out += "<tr>"
 		+ "<td>SPRITE</td>"
 		+ "<td>ID</td>"
@@ -56,7 +56,8 @@ function buildTable(start, end)
 		
 		if (type2!=undefined) {
 			type2 = type2.substring(9, type2.length-1);
-			lastChar=type2.indexOf('"');
+			lastChar=type2.indexOf('"');			
+			type2 = capitalizeFirstLetter(type2);
 			type2=type2.substring(0,lastChar)+"/";
 		}
 		
@@ -65,11 +66,13 @@ function buildTable(start, end)
 			type2 = "";
 		}
 		
+		type1 = capitalizeFirstLetter(type1);
+		
+		
 		var finalType = type2+type1;
 		
 		out += "<tr>"
-			+ "<td width='150'>"+ "<a href='" + url +  "'target='_blank'</a><img src='" + getImage(dexJSON) +
-			 "'/></td>"
+			+ "<td width='150'>"+ "<a href='" + url +  "'target='_blank'</a><img src='" + getImage(dexJSON) + "'/></td>"
 			+ "<td>" + dexJSON.national_id + "</td>"
 			+ "<td width='100'>" + name + "</td>"
 			+ "<td>" + finalType+ "</td>"

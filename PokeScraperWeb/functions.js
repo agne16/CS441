@@ -77,3 +77,9 @@ function getDesc(dexJSON, gen)
 	//return
 	return JSON.parse(xhr.response).description
 }
+
+//Given a string, return the string	with first letter capitalized
+function capitalizeFirstLetter(string) 
+{
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
