@@ -1,44 +1,47 @@
 <html>
-	<style>
-		img { vertical-align: middle;}
-		table
-		{
-			font-family : "Comic Sans MS", cursive, sans-serif;
-			text-align: center;
-			width: 100%;
-		}
-		table, td
-		{
-			border: 1px solid black;
-		}
-		h1 { font-family : "Comic Sans MS", cursive, sans-serif;}
-	</style>
-	
-	<head>	
-		<script type="text/javascript" src="functions.js"></script>
-		<script type="text/javascript" src="stats.js"></script>		
-	</head>
-	
-	<body bgcolor="#5C85FF">
-	<h1>Pokemon Stats</h1>
-	<button onclick="location.reload()">Refresh</button>
-	<div id="id01"></div>	
-	</body>
-	
-	<script type="text/javascript">
-		function promptRange() 
-		{
-			var start = prompt("Please enter START range of Pokedex ID\n (Integer between 1 and 718)", "1");
-			var end = prompt("Please enter END range of Pokedex ID (Integer between START and 718)", "9");
-			
-			buildTable(start, end);
-		}
-		function refresh()
-		{
-			location.reload();
-		}
-		window.onload = promptRange();
-	</script>
+
+    <head>
+        <script type="text/javascript" src="functions.js"></script>
+        <script type="text/javascript" src="stats.js"></script>
+        <link rel="stylesheet" type="text/css" href="Fonts/font.css">
+        <style>
+            h1 
+            { 
+                font-family : "Pokemon GB";
+                font-size: 150%;
+            }			
+            table
+            {
+                font-family : "Pokemon GB";
+                font-size:75%;
+                text-align: center;
+                width: 100%;
+            }
+            img { vertical-align: middle;}
+            table, td { border: 1px solid black; }
+        </style>
+    </head>
+
+    <body bgcolor="#5C85FF">
+        <h1>Pokemon Stats</h1>
+        <button onclick="location.reload()">Refresh</button>
+        <div id="id01"></div>
+    </body>
+
+    <script type="text/javascript">
+        function promptRange()
+        {
+            var start = prompt("Please enter START range of Pokedex ID\n (Integer between 1 and 718)", "1");
+            var end = prompt("Please enter END range of Pokedex ID (Integer between START and 718)", "9");
+
+            buildTable(start, end);
+        }
+        function refresh()
+        {
+            location.reload();
+        }
+        window.onload = promptRange();
+    </script>
 
 
 </html>

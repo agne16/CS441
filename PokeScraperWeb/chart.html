@@ -1,72 +1,101 @@
 <html>
-  <head>
-    <!--Load the AJAX API-->
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-	<script type="text/javascript" src="functions.js"></script>
-	
-    <script type="text/javascript">
+    <html manifest="demo_html.appcache">
+        <head>
+            <!--Load the AJAX API-->
+            <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+            <script type="text/javascript" src="functions.js"></script>
 
-      // Load the Visualization API and the piechart package.
-      google.load('visualization', '1.0', {'packages':['corechart']});
+            <script type="text/javascript">
+                // Load the Visualization API and the bubblechart package.
+                google.load('visualization', '1.0', {'packages':['corechart']});
 
-      // Set a callback to run when the Google Visualization API is loaded.
-      google.setOnLoadCallback(drawChart);
+                // Set a callback to run when the Google Visualization API is loaded.
+                google.setOnLoadCallback(drawChart);
 
-      // Callback that creates and populates a data table,
-      // instantiates the pie chart, passes in the data and
-      // draws it.
-      function drawChart() {
+                // Callback that creates and populates a data table,
+                // instantiates the bubble chart, passes in the data and
+                // draws it.				
+                function drawChart() 
+                {						
 
-        // Create the data table.
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Pokemon');
-		data.addColumn('number', 'Attack')
-        data.addColumn('number', 'Speed');
-		data.addColumn('string', 'Type');
-		data.addColumn('number', 'BMI')
-		
-		for(var i = 1; i < 10; i++)
-		{
-			var dexJSON = getEntry(i);
-			var height = dexJSON.height / 10;
-			var weight = dexJSON.weight / 10;
-			//var ratio = calcRatio(dexJSON.hp,dexJSON.attack,dexJSON.sp_atk,dexJSON.speed);
-			var name = dexJSON.name;
-			var att = dexJSON.attack;
-			var spd = dexJSON.speed;
-			var bmi = calcBMI(height, weight);
-			var type1 = getType1(dexJSON);
-			var type2 = getType2(dexJSON); //not used
-					
-		
-			data.addRow([name, att, spd, type1, bmi]);
-		}
-        
+                    // Create the data table.
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Pokemon');
+                    data.addColumn('number', 'Attack')
+                    data.addColumn('number', 'Speed');
+                    data.addColumn('string', 'Type');
+                    data.addColumn('number', 'BMI')
 
-        // Set chart options
-        var options = {
-        title: 'Correlation between Attack, Speed, Type, and BMI',
-        hAxis: {title: 'Attack'},
-        vAxis: {title: 'Speed'},
-        bubble: {
-          textStyle: {
-            fontSize: 12,
-            fontName: 'Times-Roman',
-            color: 'green',
-            bold: true,
-            italic: true
-          }
-        }
-      };
+                    for(var i = 1; i < 10; i++)
+                    {
+                        var dexJSON = getEntry(i);
+                        var height = dexJSON.height / 10;
+                        var weight = dexJSON.weight / 10;
+                        //var ratio = calcRatio(dexJSON.hp,dexJSON.attack,dexJSON.sp_atk,dexJSON.speed);
+                        var name = dexJSON.name;
+                        var att = dexJSON.attack;
+                        var spd = dexJSON.speed;
+                        var bmi = calcBMI(height, weight);
+                        var type = getType1(dexJSON);
 
-        // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.BubbleChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
-      }
-    </script>
-  </head>
+                        if (getType2(dexJSON) != "")//I suspect the "main" type is here if it exists
+                        {
+                            var type = getType2(dexJSON);
+                        }
 
-<body>
-  <div id="chart_div" style="width: 900px; height: 500px;"></div>
-</body>
-</html>
+                        data.addRow([name, Math.max(dexJSON.attack, dexJSON.sp_atk), spd, type, bmi]);
+                    }				
+
+                    // Set chart options
+                    var options =
+                        {
+                            title: 'Correlation between Attack, Speed, Type, and BMI',
+                            hAxis: {title: 'Attack'},
+                            vAxis: {title: 'Speed'},
+                            bubble:
+                            {
+                                textStyle:
+                                {
+                                    fontSize: 12,
+                                    fontName: 'Times-Roman',
+                                    color: 'black',
+                                    bold: true,
+                                    italic: true
+                                }
+                            },
+                            series:
+                            {
+                                Normal:     { color: '#A8A77A'},
+                                Fire:       { color: '#EE8130'},
+                                Water:      { color: '#6390F0'},
+                                Electric:   { color: '#F7D02C'},
+                                Grass:      { color: '#7AC74C'},
+                                Ice:        { color: '#96D9D6'},
+                                Fighting:   { color: '#C22E28'},
+                                Poison:     { color: '#A33EA1'},
+                                Ground:     { color: '#E2BF65'},
+                                Flying:     { color: '#A98FF3'},
+                                Psychic:    { color: '#F95587'},
+                                Bug:        { color: '#A6B91A'},
+                                Rock:       { color: '#B6A136'},
+                                Ghost:      { color: '#735797'},
+                                Dragon:     { color: '#6F35FC'},
+                                Dark:       { color: '#705746'},
+                                Steel:      { color: '#B7B7CE'},
+                                Fairy:      { color: '#D685AD'},
+                            }
+                        };
+
+                    // Instantiate and draw our chart, passing in some options.
+                    var chart = new google.visualization.BubbleChart(document.getElementById('chart_div'));
+                    chart.draw(data, options);
+                }
+            </script>
+
+
+        </head>
+
+        <body>
+            <div id="chart_div" style="width: 900px; height: 500px;"></div>
+        </body>
+    </html>
