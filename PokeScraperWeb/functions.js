@@ -15,45 +15,52 @@ So  weight/10 gives you kilograms
 and height/10 gives you meters
 **/
 
-var downloadedPokemon = [""];
-
 //Returns the JSON Formatted Pokedex Data given a Dex Number
 function getEntry(dexNumber)
 {
+    //if some function wants to get the 0th pokemon entry
 	if (dexNumber == 0)
 	{
-		return undefined;
+		return undefined;//NOPE
 	}
 	
-    if(downloadedPokemon[dexNumber] != undefined)
+	//check if the data is in session storage first
+    if(sessionStorage.getItem(dexNumber))
     {
-        return downloadedPokemon[dexNumber];
+        return JSON.parse(sessionStorage.getItem(dexNumber));
     }
     
     //create new http request
     var xhr = new XMLHttpRequest();
     var url = null;
-    var dexJSON = null;
+    var entry = null;
     
     //create url to query server and get response
     url = "http://pokeapi.co/api/v1/pokemon/" + dexNumber + "/";
     xhr.open("GET", url, false);
     xhr.send();
     
-    var entry = JSON.parse(xhr.response.valueOf());
-    
-    //return the parsed response (JSON format)
-    downloadedPokemon[dexNumber] = entry;
+	//store the pokemon data and return it
+    entry = JSON.parse(xhr.response.valueOf());
+    sessionStorage.setItem(dexNumber, JSON.stringify(entry));
     return entry;
 }
 
 //Returns url to an image given a JSON formatted Pokedex Entry
 function getImage(dexJSON)
 {
+	//if you want to get the image to a non-existant entry
 	if (dexJSON == undefined)
 	{
 		return "Images/Pokeball.png"
 	}
+	
+	//see if the url image is in sessionstorage
+	var key = dexJSON.national_id + "_image";
+	if(sessionStorage.getItem(key))
+    {
+        return sessionStorage.getItem(key);
+    }
 	
     //request the pokedex data for a particular pokedex entry number
     var xhr = new XMLHttpRequest();
@@ -64,8 +71,10 @@ function getImage(dexJSON)
     xhr.open("GET", imguri, false);	
     xhr.send();
     
-    //return the url of the image
-    return "http://pokeapi.co" + JSON.parse(xhr.response).image;
+    //store the url of the image and return it
+    var image = "http://pokeapi.co" + JSON.parse(xhr.response).image;
+	sessionStorage.setItem(key, image);
+    return image;
 }
 
 //returns the description of a Pokemon given a JSON and a generation (int)
@@ -81,8 +90,9 @@ function getDesc(dexJSON, gen)
     // the JSON has an array of description objects that contains:
     // 1) name of the object (pokemonName_gen_1, pokemonName_gen_3...) and
     // 2) url to the actual text description
-    dexJSON.descriptions.forEach(function(entry)
-                                 {
+    
+	dexJSON.descriptions.forEach(function(entry)
+    {
         //if the substring is found in the description name
         if (entry.name.indexOf("gen_" + gen) != -1)
         {			

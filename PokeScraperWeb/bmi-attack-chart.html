@@ -1,354 +1,260 @@
 <html>
-  <head>
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript" src="functions.js"></script>
-    <script type="text/javascript">
-     var validNums = false;
-      while(!validNums)
-	{
-	var start = prompt("Prease enter a number from 1-649.");
-	var end = prompt("Prease enter a number from 1-649 that is higher than " + start+".");
-	validNums = (end!=null) && (start!=null) && (end-start>0) && (end>0) && (start>0);//check if the two nums is valid
-	if (!validNums)
-	  {
-	    alert("UH, NO, try again.");
-	  }//validNum checker
-	}//prompt while loop
-      google.load("visualization", "1", {packages:["corechart"]});
-      google.setOnLoadCallback(drawChart);
-      function drawChart()
-      { 
-        var data = new google.visualization.DataTable();
-
-//===============WARNING: LOTS OF COPY PASTA UP AHEAD!============================================
-data.addColumn('number', 'x');
-
-data.addColumn('number', 'Fire');
-data.addColumn({type: 'string', role: 'tooltip', 'p': {'html': true}});//FI-yah series
-
-data.addColumn('number', 'Water');
-data.addColumn({type: 'string', role: 'tooltip', 'p': {'html': true}});//water series
-
-data.addColumn('number', 'Grass');
-data.addColumn({type: 'string', role: 'tooltip', 'p': {'html': true}});//glass series
-
-data.addColumn('number', 'Electric');
-data.addColumn({type: 'string', role: 'tooltip', 'p': {'html': true}});//it's electric series
-
-data.addColumn('number', 'Psychic');
-data.addColumn({type: 'string', role: 'tooltip', 'p': {'html': true}});//sidekick series
-
-data.addColumn('number', 'Ice');
-data.addColumn({type: 'string', role: 'tooltip', 'p': {'html': true}});//eyes series
-
-data.addColumn('number', 'Dragon');
-data.addColumn({type: 'string', role: 'tooltip', 'p': {'html': true}});//OP series
-
-data.addColumn('number', 'Dark');
-data.addColumn({type: 'string', role: 'tooltip', 'p': {'html': true}});//brack series
-
-data.addColumn('number', 'Fairy');
-data.addColumn({type: 'string', role: 'tooltip', 'p': {'html': true}});//ferry series
-
-data.addColumn('number', 'Normal');
-data.addColumn({type: 'string', role: 'tooltip', 'p': {'html': true}});//normal series
-
-data.addColumn('number', 'Fighting');
-data.addColumn({type: 'string', role: 'tooltip', 'p': {'html': true}});//fighting series
-
-data.addColumn('number', 'Flying');
-data.addColumn({type: 'string', role: 'tooltip', 'p': {'html': true}});//frying series
-
-data.addColumn('number', 'Poison');
-data.addColumn({type: 'string', role: 'tooltip', 'p': {'html': true}});//poisson distribution series
-
-data.addColumn('number', 'Ground');
-data.addColumn({type: 'string', role: 'tooltip', 'p': {'html': true}});//ground series
-
-data.addColumn('number', 'Rock');
-data.addColumn({type: 'string', role: 'tooltip', 'p': {'html': true}});//Dwayne the rock Jahnson series
-
-data.addColumn('number', 'Bug');
-data.addColumn({type: 'string', role: 'tooltip', 'p': {'html': true}});//bug series
-
-data.addColumn('number', 'Ghost');
-data.addColumn({type: 'string', role: 'tooltip', 'p': {'html': true}});//cod:ghosts series
-
-data.addColumn('number', 'Steel');
-data.addColumn({type: 'string', role: 'tooltip', 'p': {'html': true}});//steel series
-        var vals = [];
-        for(var i = start;i<end;i++)
-        {
-            var dexJSON = getEntry(i);
-            var height = dexJSON.height / 10;
-            var weight = dexJSON.weight / 10;
-            //var ratio = calcRatio(dexJSON.hp,dexJSON.attack,dexJSON.sp_atk,dexJSON.speed);
-            var name = dexJSON.name;
-            var att = dexJSON.attack;
-            var bmi = calcBMI(height, weight);
-	    var typeArray = dexJSON.types;
-	    //Many Poker Manz are dual-typed. First, let's handle the first type.
-	    var type1 = JSON.stringify(typeArray[0]); //type1 = what will eventually hold the type.
-	    type1 = type1.substring(9, type1.length-1);
-	    var lastChar = type1.indexOf('"');
-	    type1 = type1.substring(0,lastChar);
-            type1 = capitalizeFirstLetter(type1);
-            var colorType = type1;
-	    //now on to type2.
-	    var type2 = JSON.stringify(typeArray[1]);	
-	    if (type2!=undefined)
+    <head>
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript" src="functions.js"></script>
+        <script type="text/javascript">
+            var validNums = false;
+            while(!validNums)
             {
-                type2 = type2.substring(9, type2.length-1);
-        	lastChar=type2.indexOf('"');			
-		type2 = capitalizeFirstLetter(type2);
-                colorType=type2.substring(0, lastChar);
-		type2=type2.substring(0,lastChar)+"/";
-	    }
-		
-	    //if it's undefined, set it equal to none.
-	    if (type2==undefined)
-            {
-		type2 = "";
-	    }
-		
-		
-	    var finalType = type2+type1;
-            var image = '<img src="'+ getImage(dexJSON)+'"/>';
-            var htmlContent2 = '<table style="width:100%">'+
-                                '<tr>'+
-                                    '<td>'+image+'</td>'+
-                                    '<td><table style="width:100%">'+
-                                        '<tr>'+
-                                            '<td>'+ name +'</td>' +
-                                        '</tr>'+
-                                        '<tr>'+
-                                            '<td>Attack: ' + att+'</td>'+
-                                        '</tr>'+
-                                        '<tr>'+
-                                        '<td>BMI: '+bmi+'</td>'+
-                                        '<tr>'+
-                                        '<td>Type(s) '+finalType+
-                                        '</tr>'+
-                                        '</table>' +
-                                    '</td>'+
-                                '</tr>' +
-                                '</table>'
-            //==I SORRY NUXOLL==
-            /**
-             *This mess is how you add data points to the chart. Each data point has three paramters: 
-             *bmi, att, and tooltip (aka htmlContent2). bmi always goes in the first index. htmlContent2 always goes
-             *right after att. Where att goes depends on the Pokemon's type.
-             */
-            if (colorType=="Fire")
-            {
-                vals.push([bmi, att, htmlContent2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,]);
-            }
-            else if (colorType=="Water") 
-            {
-                vals.push([bmi, null, null, att, htmlContent2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,]);
-            }
-            else if (colorType=="Grass") 
-            {
-                vals.push([bmi, null, null, null, null,  att, htmlContent2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,]);
-            }
-            else if (colorType=="Electric") 
-            {
-                vals.push([bmi, null, null, null, null,  null, null, att, htmlContent2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,]);
-            }
-            else if (colorType=="Psychic") 
-            {
-                vals.push([bmi, null, null, null, null,  null, null, null, null, att, htmlContent2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,]);
-            }
-            else if (colorType=="Ice") 
-            {
-                vals.push([bmi, null, null, null, null,  null, null, null, null, null, null, att, htmlContent2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,]);
-            }
-            else if (colorType=="Dragon") 
-            {
-                vals.push([bmi, null, null, null, null,  null, null, null, null, null, null, null, null, att, htmlContent2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,]);
-            }
-            else if (colorType=="Dark") 
-            {
-                vals.push([bmi, null, null, null, null,  null, null, null, null, null, null, null, null, null, null, att, htmlContent2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,]);
-            }
-            else if (colorType=="Fairy") 
-            {
-                vals.push([bmi, null, null, null, null,  null, null, null, null, null, null, null, null, null, null, null, null, att, htmlContent2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,]);
-            }
-            else if (colorType=="Normal") 
-            {
-                vals.push([bmi, null, null, null, null,  null, null, null, null, null, null, null, null, null, null, null, null, null, null, att, htmlContent2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,]);
-            }
-            else if (colorType=="Fighting") 
-            {
-                vals.push([bmi, null, null, null, null,  null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, att, htmlContent2, null, null, null, null, null, null, null, null, null, null, null, null, null, null,]);
-            }
-            else if (colorType=="Flying") 
-            {
-                vals.push([bmi, null, null, null, null,  null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, att, htmlContent2, null, null, null, null, null, null, null, null, null, null, null, null,]);
-            }
-            else if (colorType=="Poison") 
-            {
-                vals.push([bmi, null, null, null, null,  null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, att, htmlContent2, null, null, null, null, null, null, null, null, null, null,]);
-            }
-            else if (colorType=="Ground") 
-            {
-                vals.push([bmi, null, null, null, null,  null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, att, htmlContent2, null, null, null, null, null, null, null, null,]);
-            }
-            else if (colorType=="Rock") 
-            {
-                vals.push([bmi, null, null, null, null,  null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, att, htmlContent2, null, null, null, null, null, null,]);
-            }
-            else if (colorType=="Bug") 
-            {
-                vals.push([bmi, null, null, null, null,  null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, att, htmlContent2, null, null, null, null,]);
-            }
-            else if (colorType=="Ghost") 
-            {
-                vals.push([bmi, null, null, null, null,  null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, att, htmlContent2, null, null,]);
-            }
-            else if (colorType=="Steel") 
-            {
-                vals.push([bmi, null, null, null, null,  null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, att, htmlContent2,]);
-            }
-            
-            
-            
-        }
-        data.addRows(vals);
-        var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
-        var options =
-        {
-            title: "Attack vs BMI",
-            vAxis:
-            {
-                title: "Attack",
-                viewWindow:
+                var start = prompt("Prease enter a number from 1-649.");
+                var end = prompt("Prease enter a number from 1-649 that is higher than " + start+".");
+                validNums = (end!=null) && (start!=null) && (end-start>0) && (end>0) && (start>0);//check if the two nums is valid
+                if (!validNums)
                 {
-                    min: 0
-                }
+                    alert("UH, NO, try again.");
+                }//validNum checker
+            }//prompt while loop
+            google.load("visualization", "1", {packages:["corechart"]});
+            google.setOnLoadCallback(drawChart);
+            function drawChart()
+            { 
+                var data = new google.visualization.DataTable();
 
-            },
-            hAxis:
-            {
-                title: 'BMI',
-                viewWindow:
+                data.addColumn('number', 'x');
+
+                var types = [
+                    "Normal",
+                    "Fire",
+                    "Water",
+                    "Electric",
+                    "Grass",
+                    "Ice",
+                    "Fighting",
+                    "Poison",
+                    "Ground",
+                    "Flying",
+                    "Psychic",
+                    "Bug",
+                    "Rock",
+                    "Ghost",
+                    "Dragon",
+                    "Dark",
+                    "Steel",
+                    "Fairy",
+                ];
+
+                for (var i = 0; i < types.length; i++)
                 {
-                    min: 0
+                    data.addColumn('number', types[i]);
+                    data.addColumn({type: 'string', role: 'tooltip', 'p': {'html': true}});
                 }
-            },
-            
-            series:
-            {
-               0:
-               {
-                color: 'orange'
-               },
-               
-               1:
-               {
-                color: 'blue'
-               },
-               
-               2:
-               {
-                color: 'green'
-               },
-               
-               3:
-               {
-                color: 'yellow'
-               },
-               
-               4:
-               {
-                color: 'purple'
-               },
-               
-               5:
-               {
-                color: 'cyan'
-               },
-               
-               6:
-               {
-                color: 'teal'
-               },
-               
-               7:
-               {
-                color: 'black'
-               },
-               
-               8:
-               {
-                color: 'pink'
-               },
-               
-               9:
-               {
-                color: 'gray'
-               },
-               
-               10:
-               {
-                color: 'red'
-               },
-               
-               11:
-               {
-                color: 'SkyBlue'
-               },
-               
-               12:
-               {
-                color: 'purple'
-               },
-               
-               13:
-               {
-                color: 'chocolate'
-               },
-               
-               14:
-               {
-                color: 'brown'
-               },
-               
-               15:
-               {
-                color: 'chartreuse'
-               },
-               
-               16:
-               {
-                color: 'indigo'
-               },
-               
-               17:
-               {
-                color: 'silver'
-               },
-            },
-            
-            tooltip:
-            {
-                isHtml: true
-            },
-            
-            pointSize:20
+                
+                var vals = [];
+                for(var i = start;i<end;i++)
+                {
+                    var dexJSON = getEntry(i);
+                    var height = dexJSON.height / 10;
+                    var weight = dexJSON.weight / 10;
+                    //var ratio = calcRatio(dexJSON.hp,dexJSON.attack,dexJSON.sp_atk,dexJSON.speed);
+                    var name = dexJSON.name;
+                    var att = dexJSON.attack;
+                    var bmi = calcBMI(height, weight);
+                    var typeArray = dexJSON.types;
+                    
+                    //Protip: Theres a fuction to get types
+                    //Many Poker Manz are dual-typed. First, let's handle the first type.
+                    var type1 = getType1(dexJSON);
+                    var colorType = type1;
+                    
+                    //now on to type2.
+                    var type2 = getType2(dexJSON);	
+                    if (type2!="")
+                    {
+                        colorType=type2;
+                        type2=type2.substring(0,lastChar)+"/";
+                    }
 
+                    var finalType = type2+type1;
+                    var image = '<img src="'+ getImage(dexJSON)+'"/>';
+                    var htmlContent2 = '<table style="width:100%">'+
+                        '<tr>'+
+                        '<td>'+image+'</td>'+
+                        '<td><table style="width:100%">'+
+                        '<tr>'+
+                        '<td>'+ name +'</td>' +
+                        '</tr>'+
+                        '<tr>'+
+                        '<td>Attack: ' + att+'</td>'+
+                        '</tr>'+
+                        '<tr>'+
+                        '<td>BMI: '+bmi+'</td>'+
+                        '<tr>'+
+                        '<td>Type(s) '+finalType+
+                        '</tr>'+
+                        '</table>' +
+                        '</td>'+
+                        '</tr>' +
+                        '</table>'
+                    /**
+                    *This mess is how you add data points to the chart. Each data point has three paramters: 
+                    *bmi, att, and tooltip (aka htmlContent2). bmi always goes in the first index. htmlContent2 always goes
+                    *right after att. Where att goes depends on the Pokemon's type.
+                    */
 
+                    //initialize an array of null
+                    var column = [];//not sure if the right var name. seems right
+                    var attPos = -1;
+                    for(var j=0; j < 37; j++)
+                    {
+                        column[j] = null;
+                    }
 
-        }
- 
-        chart.draw(data, options);
-        //{width: 400, height: 240, titleX: 'Attack', titleY: 'BMI', legend: 'none', pointSize: 5}
-      }
-    </script>
-  </head>
+                    //figure out index that attack will be stored in array
+                    if (colorType=="Normal")
+                    {
+                        attPos = 1;
+                    }
+                    else if (colorType=="Fire")
+                    {
+                        attPos = 3;
+                    }
+                    else if (colorType=="Water")
+                    {
+                        attPos = 5;
+                    }
+                    else if (colorType=="Electric")
+                    {
+                        attPos = 7;
+                    }
+                    else if (colorType=="Grass")
+                    {
+                        attPos = 9;
+                    }
+                    else if (colorType=="Ice")
+                    {
+                        attPos = 11;
+                    }
+                    else if (colorType=="Fighting")
+                    {
+                        attPos = 13;
+                    }
+                    else if (colorType=="Poison")
+                    {
+                        attPos = 15;
+                    }
+                    else if (colorType=="Ground")
+                    {
+                        attPos = 17;
+                    }
+                    else if (colorType=="Flying")
+                    {
+                        attPos = 19;
+                    }
+                    else if (colorType=="Psychic")
+                    {
+                        attPos = 21;
+                    }
+                    else if (colorType=="Bug")
+                    {
+                        attPos = 23;
+                    }
+                    else if (colorType=="Rock")
+                    {
+                        attPos = 25;
+                    }
+                    else if (colorType=="Ghost")
+                    {
+                        attPos = 27;
+                    }
+                    else if (colorType=="Dragon")
+                    {
+                        attPos = 29;
+                    }
+                    else if (colorType=="Dark")
+                    {
+                        attPos = 31;
+                    }
+                    else if (colorType=="Steel")
+                    {
+                        attPos = 33;
+                    }
+                    else if (colorType=="Fairy")
+                    {
+                        attPos = 35;
+                    }
 
-  <body>
-    <div id="chart_div" style="width: 1200px; height: 900px;"></div>
-  </body>
+                    //if a type was found
+                    if(attPos != -1)
+                    {
+                        //fill in column and add it to table
+                        column[0] = bmi;
+                        column[attPos] = att;
+                        column[attPos + 1] = htmlContent2;
+                        vals.push(column);
+                    }
+
+                }//end of gathering all pokedex entries
+                
+                data.addRows(vals);
+                var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+                var options =
+                    {
+                        title: "Attack vs BMI",
+                        vAxis:
+                        {
+                            title: "Attack",
+                            viewWindow:
+                            {
+                                min: 0
+                            }
+
+                        },
+                        hAxis:
+                        {
+                            title: 'BMI',
+                            viewWindow:
+                            {
+                                min: 0
+                            }
+                        },
+
+                        series:
+                        {                
+                            0  : { color: '#A8A77A'}, //Normal    
+                            1  : { color: '#EE8130'}, //Fire      
+                            2  : { color: '#6390F0'}, //Water     
+                            3  : { color: '#F7D02C'}, //Electric   
+                            4  : { color: '#7AC74C'}, //Grass     
+                            5  : { color: '#96D9D6'}, //Ice       
+                            6  : { color: '#C22E28'}, //Fighting   
+                            7  : { color: '#A33EA1'}, //Poison    
+                            8  : { color: '#E2BF65'}, //Ground    
+                            9  : { color: '#A98FF3'}, //Flying    
+                            10 : { color: '#F95587'}, //Psychic   
+                            11 : { color: '#A6B91A'}, //Bug       
+                            12 : { color: '#B6A136'}, //Rock      
+                            13 : { color: '#735797'}, //Ghost     
+                            14 : { color: '#6F35FC'}, //Dragon    
+                            15 : { color: '#705746'}, //Dark      
+                            16 : { color: '#B7B7CE'}, //Steel     
+                            17 : { color: '#D685AD'}, //Fairy     
+                        },
+
+                        tooltip:
+                        {
+                            isHtml: true
+                        },
+
+                        pointSize:20
+                    }//options
+
+                chart.draw(data, options);
+                //{width: 400, height: 240, titleX: 'Attack', titleY: 'BMI', legend: 'none', pointSize: 5}
+            }//drawChart
+        </script>
+    </head>
+
+    <body>
+        <div id="chart_div" style="width: 1200px; height: 900px;"></div>
+    </body>
 </html>
