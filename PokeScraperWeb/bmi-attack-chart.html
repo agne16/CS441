@@ -4,18 +4,101 @@
         <script type="text/javascript" src="functions.js"></script>
         <script type="text/javascript">
             var validNums = false;
-            while(!validNums)
-            {
-                var start = prompt("Prease enter a number from 1-649.");
-                var end = prompt("Prease enter a number from 1-649 that is higher than " + start+".");
-                validNums = (end!=null) && (start!=null) && (end-start>0) && (end>0) && (start>0);//check if the two nums is valid
-                if (!validNums)
-                {
-                    alert("UH, NO, try again.");
-                }//validNum checker
-            }//prompt while loop
+            var start = 1;
+            var end = 7;
+            //while(!validNums)
+            //{
+            //    start = prompt("Prease enter a number from 1-649.");
+            //    end = prompt("Prease enter a number from 1-649 that is higher than " + start+".");
+            //    validNums = (end!=null) && (start!=null) && (end-start>0) && (end>0) && (start>0) && (end<650);//check if the two nums is valid
+            //    if (!validNums)
+            //    {
+            //        alert("UH, NO, try again.");
+            //    }//validNum checker
+            //}//prompt while loop
             google.load("visualization", "1", {packages:["corechart"]});
             google.setOnLoadCallback(drawChart);
+            
+            /**
+             *function previous(id)
+             *redraws the chart with the six previous Pokemon, in Dex order.
+             *@param id - the ID of the html element that called this function.
+             */
+            function previous(id)
+            {
+                if (start-6>0) {
+                    start-=6;
+                    end = start+6;
+                    drawChart();
+                }
+            }
+            
+            /**
+             *function next(id)
+             *redraws the chart with the six next Pokemon in National Dex order.
+             *@param id - the ID of the html element that called this function
+             */
+            function next(id)
+            {
+                if (end+6<649) {
+                    end+=6;
+                    start=end-6;
+                    
+                    drawChart();
+                }
+            }
+            
+            /**
+             *function searchByName
+             *searches the ENTIRE Pokedex for the name of the Pokemon entered in the input field
+             *with ID "searchThisName". Currently too slow.
+             *@param id - the id of the html element that called it.
+             */
+            function searchByName(id)
+            {
+                var found = false;
+                var name = document.getElementById("searchThisName").value;
+                var i = 0;
+                for(i=1;i<650;i++)
+                {
+                    var dex = getEntry(i);
+                    if (dex.name==name)
+                    {
+                        start = i;
+                        end=i;
+                        found = true;
+                        drawChart();
+                        alert("found");
+                        break;
+                    }
+                }
+                if (!found)
+                {
+                    alert("Pokerman not found.");
+                }
+            }
+            
+            /**
+             *function displayCustomRange
+             *Takes the text entered into the aptly named fields
+             *and redraws the chart with those indexes.
+             *@param id - the id of the html element that called this function.
+             */
+            function displayCustomRange(id)
+            {
+                var newStart = document.getElementById("startIdx").value;
+                var newEnd = document.getElementById("endIdx").value;
+                if (newStart>0 && newEnd<650)
+                {
+                    start = newStart;
+                    end = newEnd;
+                    drawChart();
+                }
+                else
+                {
+                    alert("Invalid inputs. Chart not redrawn. You dick.");
+                }
+            }
             function drawChart()
             { 
                 var data = new google.visualization.DataTable();
@@ -255,6 +338,17 @@
     </head>
 
     <body>
+        <button id="previous" onClick="previous(this.id)">Previous 6</button>
+        <button id="next" onClick="next(this.id)">Next 6</button>
+        <form id="searchName">Search by name: <input type="text" id="searchThisName"</form>
+        <button id="search" onClick="searchByName(this.id)">Search</button><br>
+        <form>Input custom range:<br>
+        start:
+        <input type="text" id="startIdx">
+        end:
+        <input type="text" id="endIdx">
+        </form>
+        <button id="rangeFinder" onClick="displayCustomRange(this.id)">Display this range</button>
         <div id="chart_div" style="width: 1200px; height: 900px;"></div>
     </body>
 </html>
