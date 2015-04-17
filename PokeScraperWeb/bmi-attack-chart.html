@@ -27,7 +27,7 @@
             function previous(id)
             {
                 if (start-6>0) {
-                    start-=6;
+                    start=start-6
                     end = start+6;
                     drawChart();
                 }
@@ -41,7 +41,7 @@
             function next(id)
             {
                 if (end+6<649) {
-                    end+=6;
+                    end=end+6;
                     start=end-6;
                     
                     drawChart();
@@ -90,8 +90,8 @@
                 var newEnd = document.getElementById("endIdx").value;
                 if (newStart>0 && newEnd<650)
                 {
-                    start = newStart;
-                    end = newEnd;
+                    start = parseInt(newStart);
+                    end = parseInt(newEnd);
                     drawChart();
                 }
                 else
