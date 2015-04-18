@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript" src="../Scripts/functions.js"></script>
+        <script type="text/javascript" src="../Scripts/bmi-attack-chart.js"></script>
+    </head>
+
+    <body>
+        <button id="previous" onClick="previous(this.id)">Previous 6</button>
+        <button id="next" onClick="next(this.id)">Next 6</button>
+        <form id="searchName">Search by name: <input type="text" id="searchThisName"</form>
+        <button id="search" onClick="searchByName(this.id)">Search</button><br>
+        <form>Input custom range:<br>
+        start:
+        <input type="text" id="startIdx">
+        end:
+        <input type="text" id="endIdx">
+        </form>
+        <button id="rangeFinder" onClick="displayCustomRange(this.id)">Display this range</button>
+        <div id="chart_div" style="width: 1200px; height: 900px;"></div>
+    </body>
+</html>

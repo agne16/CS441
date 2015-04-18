@@ -1,9 +1,10 @@
-<html>	
-    <head>	
-        <script type="text/javascript" src="functions.js"></script>
-        <script type="text/javascript" src="bmi.js"></script>
-        <link rel="stylesheet" type="text/css" href="Fonts/font.css">		
-        <style>            
+<html>
+
+    <head>
+        <script type="text/javascript" src="../Scripts/functions.js"></script>
+        <script type="text/javascript" src="../Scripts/stats.js"></script>
+        <link rel="stylesheet" type="text/css" href="../Fonts/font.css">
+        <style>
             h1 
             { 
                 font-family : "Pokemon GB";
@@ -12,7 +13,7 @@
             table
             {
                 font-family : "Pokemon GB";
-                font-size: 75%;
+                font-size:75%;
                 text-align: center;
                 width: 100%;
             }
@@ -22,19 +23,18 @@
     </head>
 
     <body bgcolor="#5C85FF">
-        <h1>Pokemon BMI</h1>
+        <h1>Pokemon Stats</h1>
         <button onclick="location.reload()">Refresh</button>
-        <div id="id01"></div>	
+        <div id="id01"></div>
     </body>
 
     <script type="text/javascript">
-        function promptRange() 
+        function promptRange()
         {
             var start = prompt("Please enter START range of Pokedex ID\n (Integer between 1 and 718)", "1");
             var end = prompt("Please enter END range of Pokedex ID (Integer between START and 718)", "9");
-            var gen = prompt("What generation pokemon descriptions do you want to see?\n(Integer between 1 and 6)","6")
 
-            buildTable(start, end, gen);
+            buildTable(start, end);
         }
         function refresh()
         {

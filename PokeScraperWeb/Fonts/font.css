@@ -1,6 +1,22 @@
-﻿/* @font-face kit by Fonts2u (http://www.fonts2u.com) */ 
+﻿/* @font-face kit by Fonts2u (http://www.fonts2u.com) */
 @font-face {
 	font-family:"Pokemon GB";
 	src:url("Pokemon_GB.eot?") format("eot"),url("Pokemon_GB.woff") format("woff"),url("Pokemon_GB.ttf") format("truetype"),url("Pokemon_GB.svg#PokemonGB") format("svg");
 	font-weight:normal;font-style:normal;
 }
+<style>
+h1
+            {
+                font-family : "Pokemon GB";
+                font-size: 150%;
+            }
+            table
+            {
+                font-family : "Pokemon GB";
+                font-size:75%;
+                text-align: center;
+                width: 100%;
+            }
+            img { vertical-align: middle;}
+            table, td { border: 1px solid black; }
+</style>
