@@ -268,6 +268,7 @@ function drawChart()
     var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
     var options =
         {
+            fontName: "Pokemon GB",
             title: "Speed vs BMI",
             vAxis:
             {

@@ -17,7 +17,7 @@ Dependencies:
 function buildTable(start, end)
 {
 	//initialize first row of table
-	var out = "<table style='table'>";
+	var out = '<table>';
 	out += "<tr>"
 		+ "<td>SPRITE</td>"
 		+ "<td>ID</td>"

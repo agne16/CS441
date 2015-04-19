@@ -22,7 +22,7 @@ Dependencies:
 function buildTable(start, end, gen)
 {
 	//initialize first row of table
-	var out = "<table style='width:100%'>";
+	var out = "<table style='width:100%', font-family:.pokemonfont3>";
 	out += "<tr>"
 		+ "<td>SPRITE</td>"
 		+ "<td>ID</td>"

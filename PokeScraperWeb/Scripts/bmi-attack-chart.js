@@ -145,7 +145,7 @@ function drawChart()
 
         var finalType = type2+type1;
         var image = '<img src="'+ getImage(dexJSON)+'"/>';
-        var htmlContent2 = '<table style="width:100%">'+
+        var htmlContent2 = '<table>'+
             '<tr>'+
             '<td>'+image+'</td>'+
             '<td><table style="width:100%">'+
@@ -268,6 +268,7 @@ function drawChart()
     var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
     var options =
         {
+            fontName: "Pokemon GB",
             title: "Attack vs BMI",
             vAxis:
             {

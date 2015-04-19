@@ -74,6 +74,12 @@ function getImage(dexJSON)
     //store the url of the image and return it
     var image = "http://pokeapi.co" + JSON.parse(xhr.response).image;
 	sessionStorage.setItem(key, image);
+
+    //preload the image
+    var img = new Image();
+    img.src = image;
+    addLoadEvent(img);
+
     return image;
 }
 
@@ -159,4 +165,25 @@ function getType2(dexJSON)
         return capitalizeFirstLetter(type2);
     }
     return "";
+}
+
+//preload an image given an image source
+function addLoadEvent(func)
+{
+	var oldonload = window.onload;
+	if (typeof window.onload != 'function')
+    {
+		window.onload = func;
+	}
+    else
+    {
+		window.onload = function()
+        {
+			if (oldonload)
+            {
+				oldonload();
+			}
+			func();
+		}
+	}
 }
