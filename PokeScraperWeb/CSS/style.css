@@ -8,16 +8,16 @@
 button
 { 
     font-family : "Pokemon GB";
-    font-size: 75%;
+    font-size: 80%;
 }
 
-body 
+form
 { 
     font-family : "Pokemon GB";
     font-size: 70%;
 }
 
-table
+table,input
 {
     font-family : "Pokemon GB";
     font-size: 100%;

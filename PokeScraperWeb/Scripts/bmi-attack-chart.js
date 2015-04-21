@@ -1,6 +1,6 @@
 var validNums = false;
 var start = 1;
-var end = 7;
+var end = 6;
 google.load("visualization", "1", {packages:["corechart"]});
 google.setOnLoadCallback(drawChart);
 
@@ -13,7 +13,7 @@ function previous(id)
 {
     if (start-6>0) {
         start=start-6
-        end = start+6;
+        end = start+5;
         drawChart();
     }
 }
@@ -27,7 +27,7 @@ function next(id)
 {
     if (end+6<649) {
         end=end+6;
-        start=end-6;
+        start=end-5;
         
         drawChart();
     }
@@ -35,25 +35,24 @@ function next(id)
 
 /**
  *function searchByName
- *searches the ENTIRE Pokedex for the name of the Pokemon entered in the input field
- *with ID "searchThisName". Currently too slow.
+ *searches an array of the entire Pokedex for the name of the Pokemon entered in the input field
+ *with ID "searchThisName".
  *@param id - the id of the html element that called it.
  */
 function searchByName(id)
 {
     var found = false;
-    var name = document.getElementById("searchThisName").value;
+    var name = document.getElementById("searchThisName").value.toLowerCase().replace(/[^a-zA-Z]/g, "");
     var i = 0;
     for(i=1;i<650;i++)
     {
-        var dex = getEntry(i);
-        if (dex.name==name)
+        if (pkmnlist[i]==name)
         {
             start = i;
             end=i;
             found = true;
-            drawChart();
             alert("found");
+            drawChart();
             break;
         }
     }
@@ -84,6 +83,7 @@ function displayCustomRange(id)
         alert("Invalid inputs. Chart not redrawn. You dick.");
     }
 }
+
 function drawChart()
 { 
     var data = new google.visualization.DataTable();
@@ -119,7 +119,11 @@ function drawChart()
     }
     
     var vals = [];
-    for(var i = start;i<end;i++)
+    //if (start == end)
+    //{
+    //    end++;
+    //}
+    for(var i = start;i<=end;i++)
     {
         var dexJSON = getEntry(i);
         var height = dexJSON.height / 10;
@@ -319,5 +323,7 @@ function drawChart()
         }//options
 
     chart.draw(data, options);
+    document.getElementById('startIdx').value = ''+start;
+    document.getElementById('endIdx').value = ''+end;
     //{width: 400, height: 240, titleX: 'Attack', titleY: 'BMI', legend: 'none', pointSize: 5}
 }//drawChart
