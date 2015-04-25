@@ -1,6 +1,16 @@
 var validNums = false;
 var start = 1;
 var end = 6;
+var attacks = true;
+var speeds = false;
+var attackAndSpeed = false;
+var invert=false;
+var title = "Attack vs BMI";
+var vertAxis="Attack";
+var horizAxis = "BMI";
+var searchType = "";
+var types;
+var searchingType = false;
 google.load("visualization", "1", {packages:["corechart"]});
 google.setOnLoadCallback(drawChart);
 
@@ -51,15 +61,13 @@ function searchByName(id)
             start = i;
             end=i;
             found = true;
-            alert("found");
-            drawChart();
-            break;
         }
     }
     if (!found)
     {
-        alert("Pokerman not found.");
+        //alert("Pokerman not found.");
     }
+    drawChart();
 }
 
 /**
@@ -84,13 +92,82 @@ function displayCustomRange(id)
     }
 }
 
+/**
+ *function switchAttribute
+ *Toggles the axis between attack, speed, or both.
+ *@param id - the id of the button that called this function.
+ */
+function switchAttribute(id)
+{
+    attacks=false;
+    speeds=false;
+    attackAndSpeed=false;
+    if (id == "Attack")
+    {
+	attacks = true;
+	vertAxis = "Attack";
+    }
+        if (id == "Speed")
+    {
+	speeds = true;
+	vertAxis = "Speed";
+    }
+        if (id == "Both")
+    {
+	attackAndSpeed = true;
+	vertAxis = "Attack and Speed";
+    }
+    drawChart();
+}
+
+/**
+ *Inverts the X and Y Axis.
+ *@param id - the id of the button that called this function.
+ */
+function invertAxis(id)
+{
+    invert = !invert;
+    drawChart();
+}
+
+/**
+*Lists only Pokemon of a user-specified type in the range given.
+*@param id - the id of the element that called this function.
+*/
+function searchByType(id)
+{
+    var found = false;
+    for(var i = 0;i<types.length;i++)
+    {
+        if(types[i]==id)
+        {
+            found = true;
+            alert("found");
+            break;
+        }
+    }
+    if(found)
+    {
+        searchType = id;
+        searchingType = true;
+        drawChart();
+    }
+}
+
+function clearType(id)
+{
+    searchType = id;
+    searchingType = false;
+    drawChart();
+}
+
 function drawChart()
 { 
     var data = new google.visualization.DataTable();
 
     data.addColumn('number', 'x');
 
-    var types = 
+    types = 
 	[
         "Normal",
         "Fire",
@@ -130,7 +207,23 @@ function drawChart()
         var weight = dexJSON.weight / 10;
         //var ratio = calcRatio(dexJSON.hp,dexJSON.attack,dexJSON.sp_atk,dexJSON.speed);
         var name = dexJSON.name;
-        var att = dexJSON.attack;
+	var att;
+	if (attacks==true)
+	{
+	    att = dexJSON.attack;
+	}
+	
+	if (speeds==true)
+	{
+	    att = dexJSON.speed;
+	}
+	
+	if (attackAndSpeed==true)
+	{
+	    att = dexJSON.attack;
+	    att+= dexJSON.speed;
+	}
+
         var bmi = calcBMI(height, weight);
         var typeArray = dexJSON.types;
         
@@ -140,7 +233,19 @@ function drawChart()
         var colorType = type1;
         
         //now on to type2.
-        var type2 = getType2(dexJSON);	
+        var type2 = getType2(dexJSON);
+        var toAdd = false;
+        if (!searchingType)
+        {
+            toAdd = true;
+        }
+        var check = searchingType && (searchType == type1);
+        var check2 = type2 != null && searchType == type2;
+        var finalCheck = check||check2;
+        if (finalCheck)
+        {
+            toAdd = true;
+        }
         if (type2!="")
         {
             colorType=type2;
@@ -157,10 +262,10 @@ function drawChart()
             '<td>'+ name +'</td>' +
             '</tr>'+
             '<tr>'+
-            '<td>Attack: ' + att+'</td>'+
+            '<td>'+vertAxis+': ' + att+'</td>'+
             '</tr>'+
             '<tr>'+
-            '<td>BMI: '+bmi+'</td>'+
+            '<td>'+horizAxis+': '+bmi+'</td>'+
             '<tr>'+
             '<td>Type(s) '+finalType+
             '</tr>'+
@@ -260,23 +365,40 @@ function drawChart()
         if(attPos != -1)
         {
             //fill in column and add it to table
+	    if (invert)
+	    {
+		column[0]=att;
+		column[attPos]=bmi;
+	    }
+	    else
+	    {
             column[0] = bmi;
             column[attPos] = att;
-            column[attPos + 1] = htmlContent2;
-            vals.push(column);
+	    }
+	    column[attPos + 1] = htmlContent2;
+	    if (toAdd) {
+	        vals.push(column);
+	    }
         }
 
     }//end of gathering all pokedex entries
-    
     data.addRows(vals);
+    var horizTitle = horizAxis;
+    var vTitle=vertAxis;
+    if (invert)
+    {
+	horizTitle=vertAxis;
+	vTitle = horizAxis;
+    }
+    title = vTitle + " vs " + horizTitle;
     var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
     var options =
         {
             fontName: "Pokemon GB",
-            title: "Attack vs BMI",
+            title: title,
             vAxis:
             {
-                title: "Attack",
+                title: vTitle,
                 viewWindow:
                 {
                     min: 0
@@ -285,7 +407,7 @@ function drawChart()
             },
             hAxis:
             {
-                title: 'BMI',
+                title: horizTitle,
                 viewWindow:
                 {
                     min: 0
