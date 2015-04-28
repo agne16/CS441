@@ -5,23 +5,25 @@
 	font-weight:normal;font-style:normal;
 }
 
-button
-{ 
-    font-family : "Pokemon GB";
-    font-size: 80%;
-}
 
 form
 { 
     font-family : "Pokemon GB";
     font-size: 70%;
 }
+button
+{
+	font-family:"Pokemon GB";
+	font
+	background-color:#7EB6CF;
+}
 
 table,input
 {
-    font-family : "Pokemon GB";
-    font-size: 100%;
-    text-align: center;
+	font-family : "Pokemon GB";
+	font-size: 100%;
+	text-align: center;
+	position: relative;
 }
 
 img
@@ -29,3 +31,270 @@ img
     vertical-align: middle;
 }
 
+
+#Attack {
+	position: absolute;
+	z-index: 21;
+	top: 217px;
+	left: 134px;
+	width: 90px;
+	height: 20px;
+	background-color: #7EB6CF;
+}
+#Normal {
+	position: absolute;
+	z-index: 0;
+	top: 81px;
+	left: 117px;
+	width: 90px;
+	height: 20px;
+	background-color: #A8a77a;
+}
+#Fighting {
+	position: absolute;
+	z-index: 0;
+	top: 81px;
+	left: 212px;
+	width: 120px;
+	height: 20px;
+	background-color: #c22e28;
+}
+#Flying {
+	position: absolute;
+	z-index: 0;
+	top: 81px;
+	left: 337px;
+	width: 90px;
+	height: 20px;
+	background-color: #a98ff3;
+}
+#Poison {
+	position: absolute;
+	z-index: 0;
+	top: 81px;
+	left: 432px;
+	width: 90px;
+	height: 20px;
+	background-color: #a33ea1;
+}
+#Ground {
+	position: absolute;
+	z-index: 0;
+	top: 81px;
+	left: 527px;
+	width: 90px;
+	height: 20px;
+	background-color: #e2bf65;
+}
+#Rock {
+	position: absolute;
+	z-index: 0;
+	top: 81px;
+	left: 622px;
+	width: 76px;
+	height: 20px;
+	background-color: #b6a136;
+}
+#Bug {
+	position: absolute;
+	z-index: 0;
+	top: 81px;
+	left: 703px;
+	width: 76px;
+	height: 20px;
+	background-color: #a6b91a;
+}
+#Ghost {
+	position: absolute;
+	z-index: 0;
+	top: 81px;
+	left: 784px;
+	width: 76px;
+	height: 20px;
+	background-color: #735797;
+}
+#Steel {
+	position: absolute;
+	z-index: 0;
+	top: 81px;
+	left: 865px;
+	width: 76px;
+	height: 20px;
+	background-color: #b7b7ce;
+}
+#Fire {
+	position: absolute;
+	z-index: 0;
+	top: 112px;
+	left: 118px;
+	width: 76px;
+	height: 20px;
+	background-color: #ee8130;
+}
+#Water {
+	position: absolute;
+	z-index: 0;
+	top: 112px;
+	left: 199px;
+	width: 76px;
+	height: 20px;
+	background-color: #6390f0;
+}
+#Grass {
+	position: absolute;
+	z-index: 0;
+	top: 112px;
+	left: 280px;
+	width: 76px;
+	height: 20px;
+	background-color: #7ac74c;
+}
+#Electric {
+	position: absolute;
+	z-index: 0;
+	top: 112px;
+	left: 361px;
+	width: 120px;
+	height: 20px;
+	background-color: #f7d02c;
+}
+#Psychic {
+	position: absolute;
+	z-index: 0;
+	top: 112px;
+	left: 486px;
+	width: 105px;
+	height: 20px;
+	background-color: f95587;
+}
+#Ice {
+	position: absolute;
+	z-index: 0;
+	top: 112px;
+	left: 596px;
+	width: 76px;
+	height: 20px;
+	background-color: #96d9d6;
+}
+#Dragon {
+	position: absolute;
+	z-index: 0;
+	top: 112px;
+	left: 677px;
+	width: 90px;
+	height: 20px;
+	background-color: #6f35fc;
+}
+#Dark {
+	position: absolute;
+	z-index: 0;
+	top: 112px;
+	left: 772px;
+	width: 76px;
+	height: 20px;
+	background-color: #705746;
+}
+#Fairy {
+	position: absolute;
+	z-index: 0;
+	top: 112px;
+	left: 853px;
+	width: 76px;
+	height: 20px;
+	background-color: #d685ad;
+}
+#Clear {
+	position: absolute;
+	z-index: 0;
+	top: 112px;
+	left: 934px;
+	width: 76px;
+	height: 20px;
+	background-color: #FFF;
+}
+#Speed {
+	position: absolute;
+	z-index: 21;
+	top: 217px;
+	left: 229px;
+	width: 76px;
+	height: 20px;
+	background-color: #7EB6CF;
+}
+#Both {
+	position: absolute;
+	z-index: 21;
+	top: 217px;
+	left: 310px;
+	width: 75px;
+	height: 20px;
+	background-color: #7EB6CF;
+}
+#previous {
+	position: absolute;
+	z-index: 11;
+	top: 697px;
+	left: 1217px;
+	width: 150px;
+	height: 20px;
+	background-color: #7EB6CF;
+}
+#next {
+	position: absolute;
+	z-index: 10;
+	top: 697px;
+	left: 1372px;
+	width: 100px;
+	height: 20px;
+	background-color: #7EB6CF;
+}
+#searchName {
+	position: absolute;
+	z-index: 21;
+	top: 207px;
+	left: 500px;
+	width: 462px;
+	height: 20px;
+}
+#search {
+	position: absolute;
+	z-index: 21;
+	top: 217px;
+	left: 967px;
+	width: 90px;
+	height: 20px;
+	background-color: #7EB6CF;
+}
+#Custom {
+	position: absolute;
+	z-index: 11;
+	top: 513px;
+	left: 1217px;
+	width: 279px;
+	height: 122px;
+}
+#rangeFinder {
+	position: absolute;
+	z-index: 11;
+	top: 639px;
+	left: 1217px;
+	width: 250px;
+	height: 20px;
+	background-color: #7EB6CF;
+}
+#logo {
+	position: absolute;
+	z-index: 11;
+	top: 104px;
+	left: 1126px;
+	width: 255px;
+	height: 198px;
+}
+#doge {
+	position: absolute;
+	z-index: 11;
+	top: 100px;
+	left: 1518px;
+	width: 153px;
+	height: 160px;
+}

@@ -142,7 +142,7 @@ function searchByType(id)
         if(types[i]==id)
         {
             found = true;
-            alert("found");
+//            alert("Pokemon Found");
             break;
         }
     }
@@ -231,7 +231,7 @@ function drawChart()
         //Many Poker Manz are dual-typed. First, let's handle the first type.
         var type1 = getType1(dexJSON);
         var colorType = type1;
-        
+        var pokeNumber = i;
         //now on to type2.
         var type2 = getType2(dexJSON);
         var toAdd = false;
@@ -257,9 +257,12 @@ function drawChart()
         var htmlContent2 = '<table>'+
             '<tr>'+
             '<td>'+image+'</td>'+
-            '<td><table style="width:100%">'+
+            '<td><table style="width:1%">'+
             '<tr>'+
             '<td>'+ name +'</td>' +
+            '</tr>'+
+			'<tr>'+
+            '<td>'+ 'Number: ' + pokeNumber +'</td>' +
             '</tr>'+
             '<tr>'+
             '<td>'+vertAxis+': ' + att+'</td>'+
@@ -440,6 +443,8 @@ function drawChart()
             {
                 isHtml: true
             },
+			
+			backgroundColor: { fill:'transparent' },			
 
             pointSize:20
         }//options
