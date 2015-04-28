@@ -65,7 +65,10 @@ function searchByName(id)
     }
     if (!found)
     {
-        //alert("Pokerman not found.");
+        if (name=="idk") {
+	    start = Math.floor(Math.random()*650)+1;
+	    end=start;
+	}
     }
     drawChart();
 }
