@@ -91,7 +91,7 @@ function displayCustomRange(id)
     }
     else
     {
-        alert("Invalid inputs. Chart not redrawn. You dick.");
+        alert("Invalid inputs. Chart not redrawn.");
     }
 }
 
