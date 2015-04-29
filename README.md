@@ -8,4 +8,6 @@ In particular, we plan to compare a Pokemon's attack/speed ratio to its calculat
 
 PokeScraper scrapes data from [pokeapi.co](http://pokeapi.co) to get its data.
 
+Project is now deployed [here](http://pokescraper.herokuapp.com) via Nodejs and Heroku.
+
 [Link to the project video](https://vimeo.com/126238686)
