@@ -1,0 +1,7 @@
+{
+  "name": "PokeScraper",
+  "description": "Compare a Pokemon's stats with its BMI",
+  "repository": "https://github.com/agne16/PokeScraper",
+
+  "keywords": ["node", "express", "static"]
+}

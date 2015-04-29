@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript" src="Scripts/functions.js"></script>
+        <script type="text/javascript" src="Scripts/pokescraper.js"></script>
+		<link rel="stylesheet" type="text/css" href="CSS/style.css">
+    </head>
+
+    <body>    
+    <img src="Images/background template.jpg" width="1747" height="935"><img id="doge" src="Images/dogeachu.png" width="158" height="164">
+<button id="Attack" onClick="switchAttribute(this.id)">Attack</button>
+	<button id="Speed" onClick="switchAttribute(this.id)">Speed</button>
+	<button id="Both" onClick="switchAttribute(this.id)">Both</button>
+    <button id="previous" onClick="previous(this.id)">Previous 6</button>
+        <button id="next" onClick="next(this.id)">Next 6</button>
+    <form id="searchName">
+          <p>Search by Name:
+            <input type="text" id="searchThisName">
+          </p>
+    </form>
+    <button id="search" onClick="searchByName(this.id)">Search</button><br>
+    <form id="Custom">
+      <p>Input Custom Range:</p>
+      <p><br>
+        Start:
+        <input type="text" id="startIdx">
+      </p>
+      <p>End:
+  <input type="text" id="endIdx">
+      </p>
+    </form>
+        <button id="rangeFinder" onClick="displayCustomRange(this.id)">Display This Range</button><br />
+    <button id="Normal" onClick="searchByType(this.id)">Normal</button>
+    <button id="Fighting" onClick="searchByType(this.id)">Fighting</button>
+        <button id="Flying" onClick="searchByType(this.id)">Flying</button>
+    <button id="Poison" onClick="searchByType(this.id)">Poison</button>
+    <button id="Ground" onClick="searchByType(this.id)">Ground</button>
+        <button id="Rock" onClick="searchByType(this.id)">Rock</button>
+        <button id="Bug" onClick="searchByType(this.id)">Bug</button>
+    <button id="Ghost" onClick="searchByType(this.id)">Ghost</button>
+    <button id="Steel" onClick="searchByType(this.id)">Steel</button><br />
+
+        <button id="Fire" onClick="searchByType(this.id)">Fire</button>
+    <button id="Water" onClick="searchByType(this.id)">Water</button>
+    <button id="Grass" onClick="searchByType(this.id)">Grass</button>
+        <button id="Electric" onClick="searchByType(this.id)">Electric</button>
+        <button id="Psychic" onClick="searchByType(this.id)">Psychic</button>
+        <button id="Ice" onClick="searchByType(this.id)">Ice</button>
+        <button id="Dragon" onClick="searchByType(this.id)">Dragon</button>
+        <button id="Dark" onClick="searchByType(this.id)">Dark</button>
+        <button id="Fairy" onClick="searchByType(this.id)">Fairy</button>
+        <button id="Clear" onClick="clearType(this.id)">Clear</button><br />
+    <div id="chart_div"  style="width: 1064px; z-index: 20; height: 708px; position: absolute; left: 122px; top: 198px; padding-top: 20px;"></div>
+    <img id="logo" src="Images/logo.png" width="879" height="190">
+    </body>
+</html>
